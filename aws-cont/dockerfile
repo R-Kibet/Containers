@@ -1,0 +1,21 @@
+FROM python:3.14-rc-slim-bullseye
+
+# create folder in the container
+WORKDIR /aws-cont
+
+# copy from the source to dest in container
+COPY requirements.txt requirements.txt 
+
+#install python liblaries
+RUN pip3 install -r requirements.txt
+
+# copy all in current directory to 
+COPY . .
+
+#set the environmental variable
+ENV venv=development
+
+EXPOSE ${PORT}
+
+#command main
+CMD [ "python3", "-m", "flask", "run", "--host=0.0.0.0" ]
